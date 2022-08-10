@@ -1,10 +1,25 @@
 (ns noob.main
     (:require clojure.string))
+(import '(java.io File))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (println "Jeg er en liten tekanne!"))
+
+(defn error-message
+    [severity]
+    (str "OH GOSH! IT'S A DISASTER! WE'RE "
+         (if (= severity :mild)
+             "MILDLY INCONVENIENCED!"
+             "DOOOOOOOOOMED!")))
+
+(defn rand-str [len]
+  (apply str (take len (repeatedly #(char (+ (rand 26) 65))))))
+
+(defn touch
+    [filename & args]
+    (.createNewFile (new File (str filename "-" (rand-str 5) ".txt"))))
 
 ;; The Hobbit
 (def asym-hobbit-body-parts [{:name "head" :size 3}

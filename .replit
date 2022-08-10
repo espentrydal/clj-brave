@@ -1,6 +1,6 @@
-run = "rlwrap bb repl"
+run = "rlwrap bb --config ./noob/bb.edn repl"
 
-entrypoint = "~/clj-brave/noob/src/noob/main"
+entrypoint = "noob/src/noob/main"
 [env]
 CLJ_CONFIG = "/home/runner/.clojure"
 
