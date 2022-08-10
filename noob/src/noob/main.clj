@@ -1,5 +1,5 @@
-(ns clojure-noob.core
-  (:gen-class))
+(ns noob.main
+    (:require clojure.string))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -31,7 +31,6 @@
   [part]
   {:name (clojure.string/replace (:name part) #"^left-" "right-")
    :size (:size part)})
-
 
 (defn symmetrize-body-parts
   "Expects a seq of maps that have a :name and :size"
