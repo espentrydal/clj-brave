@@ -18,8 +18,10 @@
   (apply str (take len (repeatedly #(char (+ (rand 26) 65))))))
 
 (defn touch
-    [filename & args]
-    (.createNewFile (new File (str filename "-" (rand-str 5) ".txt"))))
+    [filename]
+    (.createNewFile (new File (str filename "-" (rand-str 5) ".txt")))
+    []
+    (println "Error: You need to provide a filename."))
 
 ;; The Hobbit
 (def asym-hobbit-body-parts [{:name "head" :size 3}
@@ -50,7 +52,8 @@
 (defn symmetrize-body-parts
   "Expects a seq of maps that have a :name and :size"
   [asym-body-parts]
-  (loop [remaining-asym-parts asym-body-parts final-body-parts []]
+  (loop [remaining-asym-parts asym-body-parts 
+         final-body-parts []]
     (if (empty? remaining-asym-parts)
       final-body-parts
       (let [[part & remaining] remaining-asym-parts]
@@ -75,3 +78,16 @@
             (into final-body-parts (set [part (matching-part part)])))
           []
           asym-body-parts))
+
+(defn hit
+    [asym-body-parts]
+    
+    (let [sym-parts (better-symmetrize-body-parts asym-body-parts)
+          body-part-size-sum (reduce + (map :size sym-parts))
+          target (rand body-part-size-sum)]
+        (loop [[part & remaining] sym-parts
+               accumulated-size (:size part)]
+            (if (> accumulated-size target)
+                part
+                (recur remaining 
+                       (+ accumulated-size (:size (first remaining))))))))
